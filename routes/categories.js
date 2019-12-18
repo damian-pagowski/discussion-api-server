@@ -17,11 +17,6 @@ router
         res.json(data);
       })
       .catch(error => next(error));
-  })
-  .get("/", (req, res, next) => {
-    Category.find()
-      .then(result => res.json(result))
-      .catch(error => next(error));
   });
 
 module.exports = router;

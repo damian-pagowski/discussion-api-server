@@ -38,9 +38,9 @@ router
   .put("/:_id", (req, res, next) => {
     const { _id } = req.params;
     const update = { ...req.body };
-    Post.findByIdAndUpdate(_id, update)
+    Post.findByIdAndUpdate(_id, update, { returnNewDocument: true })
       .then(data => {
-        return res.json({ message: "Post Deleted" });
+        return res.json(data);
       })
       .catch(error => next(error));
   })
@@ -50,7 +50,7 @@ router
     if (!["upVote", "downVote"].includes(option)) {
       throw new Error("Invalid option. Use one of: [ upVote, downVote]");
     }
-    post.findById(_id).then(post =>
+    Post.findById(_id).then(post =>
       post
         .vote(option)
         .then(data => {
@@ -59,22 +59,7 @@ router
         .catch(error => next(error))
     );
   })
-  .get("/:_id", (req, res, next) => {
-    const { _id } = req.params;
-    const { option } = req.body;
-    if (!["upVote", "downVote"].includes(option)) {
-      throw new Error("Invalid option. Use one of: [ upVote, downVote]");
-    }
-    post.findById(_id).then(post =>
-      post
-        .vote(option)
-        .then(data => {
-          return res.json({ message: data });
-        })
-        .catch(error => next(error))
-    );
-  })
-  .get("/posts/:id/comments", (req, res) => {
+  .get("/:id/comments", (req, res) => {
     Comment.find({ parentId: req.params.id })
       .then(data => {
         return res.json({ message: data });
