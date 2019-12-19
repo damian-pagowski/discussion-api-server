@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
 
-const SERVER_PORT = process.env.SERVER_PORT || 3030;
+const SERVER_PORT = process.env.PORT || process.env.SERVER_PORT || 3030;
 const DB_URI = process.env.MONGOLAB_URI;
 // routers
 const categoriesRouter = require("./routes/categories");
