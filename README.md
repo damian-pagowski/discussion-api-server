@@ -1,4 +1,7 @@
 # API Server
+API server for simplified content rating and discussion application
+
+# Installation 
 
 To install and start the API server, run the following commands in this directory:
 

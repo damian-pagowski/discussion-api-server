@@ -54,7 +54,7 @@ router
       post
         .vote(option)
         .then(data => {
-          return res.json({ message: data });
+          return res.json(data);
         })
         .catch(error => next(error))
     );
@@ -62,7 +62,7 @@ router
   .get("/:id/comments", (req, res) => {
     Comment.find({ parentId: req.params.id })
       .then(data => {
-        return res.json({ message: data });
+        return res.json(data);
       })
       .catch(error => next(error));
   });

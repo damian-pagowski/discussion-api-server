@@ -38,7 +38,7 @@ router
       comment
         .vote(option)
         .then(data => {
-          return res.json({ message: data });
+          return res.json(data);
         })
         .catch(error => next(error))
     );
