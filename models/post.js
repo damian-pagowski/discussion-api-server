@@ -1,30 +1,15 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-const postSchema = new Schema({
-  timestamp: { type: Date, default: Date.now },
+const PostSchema = new Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },
   author: { type: String, required: true },
-  category: { type: Schema.Types.ObjectId, ref: "Category" },
-  voteScore: { type: Number, required: true, default: 0 },
+  categoryId: { type: Number, required: true },
+  votes: { type: Number, default: 0 },
   deleted: { type: Boolean, required: true, default: false },
   commentCount: { type: Number, required: true, default: 0 },
+  timestamp: { type: Date, default: Date.now }
 });
 
-postSchema.methods.vote = function(option) {
-  const that = this;
-  switch (option) {
-    case "upVote":
-      that.voteScore = that.voteScore + 1;
-      break;
-    case "downVote":
-      that.voteScore = that.voteScore - 1;
-      break;
-    default:
-      break;
-  }
-  return that.save();
-};
-
-module.exports = mongoose.model("Post", postSchema);
+module.exports = mongoose.model("Post", PostSchema);

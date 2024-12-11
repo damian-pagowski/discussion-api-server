@@ -1,7 +1,7 @@
 {
-  "name": "readable-api-server",
+  "name": "discussion-api-server",
   "version": "1.0.0",
-  "description": "readable api server",
+  "description": "discussion api server",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,13 +10,16 @@
   "author": "Damian Pagowski",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.3",
     "cors": "^2.8.5",
-    "dotenv": "^8.1.0",
-    "ejs": "^2.7.1",
-    "express": "^4.17.1",
-    "express-rate-limit": "^5.0.0",
-    "helmet": "^3.21.1",
-    "mongoose": "^5.7.4"
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "faker": "^6.6.6",
+    "helmet": "^8.0.0",
+    "mongoose": "^8.8.4",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   }
 }

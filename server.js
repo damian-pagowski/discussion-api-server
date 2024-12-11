@@ -1,35 +1,11 @@
 require("dotenv").config();
-
-const express = require("express");
-const cors = require("cors");
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
 const mongoose = require("mongoose");
-mongoose.set("useFindAndModify", false);
+const DB_URI = process.env.MONGO_URI;
+const SERVER_PORT =  process.env.SERVER_PORT || 3310;
 
-const SERVER_PORT = process.env.PORT || process.env.SERVER_PORT || 3030;
-const DB_URI = process.env.MONGOLAB_URI;
-// routers
-const categoriesRouter = require("./routes/categories");
-const commentsRouter = require("./routes/comments");
-const postsRouter = require("./routes/posts");
-const indexRouter = require("./routes/index");
+const app = require("./app");
+mongoose.connect(DB_URI);
 
-app.use("/categories", categoriesRouter);
-app.use("/comments", commentsRouter);
-app.use("/posts", postsRouter);
-app.use("/", indexRouter);
-
-// error handling
-app.use(function(err, req, res, next) {
-  res.status(err.status || 400);
-  return res.send(err.message);
+app.listen(SERVER_PORT, () => {
+  console.log(`Server running on http://localhost:${SERVER_PORT}`);
 });
-
-mongoose.connect(DB_URI, { useUnifiedTopology: true, useNewUrlParser: true });
-app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
-module.exports = app;
