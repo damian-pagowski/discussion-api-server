@@ -5,6 +5,7 @@ const Comment = require('../models/comment');
 const Category = require('../models/category');
 const MONGO_URI = process.env.MONGO_URI;
 
+
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
@@ -14,6 +15,7 @@ const connectDB = async () => {
     process.exit(1); // Exit the process with failure
   }
 };
+
 
 const seedDatabase = async () => {
   try {
@@ -26,11 +28,17 @@ const seedDatabase = async () => {
     // Seed Categories
     console.log('Seeding categories...');
     const categories = await Category.insertMany([
-      { name: 'Programming', path: 'programming' },
-      { name: 'Web Development', path: 'webdev' },
-      { name: 'Testing', path: 'testing' },
+      { name: 'Programming', path: 'programming' , categoryId: 1},
+      { name: 'Web Development', path: 'webdev' , categoryId: 2},
+      { name: 'Testing', path: 'testing' ,  categoryId: 3},
     ]);
     console.log('Categories created:', categories.map(cat => cat.name).join(', '));
+
+    // Get the auto-incremented categoryIds
+    const categoryIdMap = {};
+    categories.forEach(category => {
+      categoryIdMap[category.name] = category.categoryId;
+    });
 
     // Seed Posts
     console.log('Seeding posts...');
@@ -39,21 +47,21 @@ const seedDatabase = async () => {
         title: 'Learning JavaScript in 2024',
         body: 'JavaScript is still one of the most popular programming languages in 2024.',
         author: 'John Doe',
-        categoryId: categories.find(cat => cat.name === 'Programming')._id,
+        categoryId: categoryIdMap['Programming'], // Reference by categoryId, not ObjectId
         votes: 10,
       },
       {
         title: 'Web Development Trends 2024',
         body: 'Discover the latest web development trends and best practices for 2024.',
         author: 'Jane Smith',
-        categoryId: categories.find(cat => cat.name === 'Web Development')._id,
+        categoryId: categoryIdMap['Web Development'], // Reference by categoryId
         votes: 20,
       },
       {
         title: 'Why Testing Matters',
         body: 'Learn why testing is crucial for software development and quality assurance.',
         author: 'Alex Johnson',
-        categoryId: categories.find(cat => cat.name === 'Testing')._id,
+        categoryId: categoryIdMap['Testing'], // Reference by categoryId
         votes: 15,
       }
     ]);
